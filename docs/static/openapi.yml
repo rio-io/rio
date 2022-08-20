@@ -51639,6 +51639,12 @@ definitions:
       id:
         type: string
         format: uint64
+  rio.rio.MsgCreateResumeResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
   rio.rio.MsgSendCertResponse:
     type: object
     properties:

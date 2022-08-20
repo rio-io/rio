@@ -70,3 +70,24 @@ func (k Keeper) AppendCert(ctx sdk.Context, cert types.Cert) uint64 {
 	k.SetCertCount(ctx, count+1)
 	return count
 }
+
+func (k Keeper) GetCerts(ctx sdk.Context, certs []uint64) (list []*types.Cert, found bool) {
+	// Get the store
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), []byte(types.CertKey))
+
+	var fcerts []*types.Cert
+	for _, id := range certs {
+		// Convert the cert ID into bytes
+		bz := make([]byte, 8)
+		binary.BigEndian.PutUint64(bz, id)
+		cert := store.Get(bz)
+
+		if cert != nil {
+			var fcert types.Cert
+			k.cdc.MustUnmarshal(cert, &fcert)
+			fcerts = append(fcerts, &fcert)
+		}
+	}
+
+	return fcerts, true
+}

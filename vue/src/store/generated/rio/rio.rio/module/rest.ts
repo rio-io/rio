@@ -18,6 +18,11 @@ export interface RioMsgCreateCertResponse {
   id?: string;
 }
 
+export interface RioMsgCreateResumeResponse {
+  /** @format uint64 */
+  id?: string;
+}
+
 export interface RioMsgSendCertResponse {
   /** @format uint64 */
   id?: string;

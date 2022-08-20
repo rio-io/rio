@@ -6,11 +6,13 @@ import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "
 import { Api } from "./rest";
 import { MsgSendCert } from "./types/rio/tx";
 import { MsgCreateCert } from "./types/rio/tx";
+import { MsgCreateResume } from "./types/rio/tx";
 
 
 const types = [
   ["/rio.rio.MsgSendCert", MsgSendCert],
   ["/rio.rio.MsgCreateCert", MsgCreateCert],
+  ["/rio.rio.MsgCreateResume", MsgCreateResume],
   
 ];
 export const MissingWalletError = new Error("wallet is required");
@@ -45,6 +47,7 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
     msgSendCert: (data: MsgSendCert): EncodeObject => ({ typeUrl: "/rio.rio.MsgSendCert", value: MsgSendCert.fromPartial( data ) }),
     msgCreateCert: (data: MsgCreateCert): EncodeObject => ({ typeUrl: "/rio.rio.MsgCreateCert", value: MsgCreateCert.fromPartial( data ) }),
+    msgCreateResume: (data: MsgCreateResume): EncodeObject => ({ typeUrl: "/rio.rio.MsgCreateResume", value: MsgCreateResume.fromPartial( data ) }),
     
   };
 };
