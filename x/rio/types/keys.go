@@ -15,6 +15,12 @@ const (
 
 	// MemStoreKey defines the in-memory store key
 	MemStoreKey = "mem_rio"
+
+	// Keep track of the index of certs
+	CertKey = "Cert-value-"
+
+	// TODO: It really need it? not unique key combined with creator and sequential id
+	CertCountKey = "Cert-count-"
 )
 
 func KeyPrefix(p string) []byte {
