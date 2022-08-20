@@ -35,11 +35,12 @@ message QueryParamsResponse {
 
 message QueryCertsRequest {
   string address = 1;
+  cosmos.base.query.v1beta1.PageRequest pagination = 2;
 }
 
 message QueryCertsResponse {
-  string creator = 1;
-  string title = 2;
+  repeated Cert Cert = 1;
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
 // this line is used by starport scaffolding # 3

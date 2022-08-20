@@ -1,6 +1,11 @@
 /* eslint-disable */
 import { Reader, Writer } from "protobufjs/minimal";
 import { Params } from "../rio/params";
+import {
+  PageRequest,
+  PageResponse,
+} from "../cosmos/base/query/v1beta1/pagination";
+import { Cert } from "../rio/cert";
 
 export const protobufPackage = "rio.rio";
 
@@ -15,11 +20,12 @@ export interface QueryParamsResponse {
 
 export interface QueryCertsRequest {
   address: string;
+  pagination: PageRequest | undefined;
 }
 
 export interface QueryCertsResponse {
-  creator: string;
-  title: string;
+  Cert: Cert[];
+  pagination: PageResponse | undefined;
 }
 
 const baseQueryParamsRequest: object = {};
@@ -126,6 +132,9 @@ export const QueryCertsRequest = {
     if (message.address !== "") {
       writer.uint32(10).string(message.address);
     }
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(18).fork()).ldelim();
+    }
     return writer;
   },
 
@@ -138,6 +147,9 @@ export const QueryCertsRequest = {
       switch (tag >>> 3) {
         case 1:
           message.address = reader.string();
+          break;
+        case 2:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -154,12 +166,21 @@ export const QueryCertsRequest = {
     } else {
       message.address = "";
     }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
     return message;
   },
 
   toJSON(message: QueryCertsRequest): unknown {
     const obj: any = {};
     message.address !== undefined && (obj.address = message.address);
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageRequest.toJSON(message.pagination)
+        : undefined);
     return obj;
   },
 
@@ -170,22 +191,30 @@ export const QueryCertsRequest = {
     } else {
       message.address = "";
     }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
     return message;
   },
 };
 
-const baseQueryCertsResponse: object = { creator: "", title: "" };
+const baseQueryCertsResponse: object = {};
 
 export const QueryCertsResponse = {
   encode(
     message: QueryCertsResponse,
     writer: Writer = Writer.create()
   ): Writer {
-    if (message.creator !== "") {
-      writer.uint32(10).string(message.creator);
+    for (const v of message.Cert) {
+      Cert.encode(v!, writer.uint32(10).fork()).ldelim();
     }
-    if (message.title !== "") {
-      writer.uint32(18).string(message.title);
+    if (message.pagination !== undefined) {
+      PageResponse.encode(
+        message.pagination,
+        writer.uint32(18).fork()
+      ).ldelim();
     }
     return writer;
   },
@@ -194,14 +223,15 @@ export const QueryCertsResponse = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryCertsResponse } as QueryCertsResponse;
+    message.Cert = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.creator = reader.string();
+          message.Cert.push(Cert.decode(reader, reader.uint32()));
           break;
         case 2:
-          message.title = reader.string();
+          message.pagination = PageResponse.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -213,37 +243,46 @@ export const QueryCertsResponse = {
 
   fromJSON(object: any): QueryCertsResponse {
     const message = { ...baseQueryCertsResponse } as QueryCertsResponse;
-    if (object.creator !== undefined && object.creator !== null) {
-      message.creator = String(object.creator);
-    } else {
-      message.creator = "";
+    message.Cert = [];
+    if (object.Cert !== undefined && object.Cert !== null) {
+      for (const e of object.Cert) {
+        message.Cert.push(Cert.fromJSON(e));
+      }
     }
-    if (object.title !== undefined && object.title !== null) {
-      message.title = String(object.title);
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromJSON(object.pagination);
     } else {
-      message.title = "";
+      message.pagination = undefined;
     }
     return message;
   },
 
   toJSON(message: QueryCertsResponse): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.title !== undefined && (obj.title = message.title);
+    if (message.Cert) {
+      obj.Cert = message.Cert.map((e) => (e ? Cert.toJSON(e) : undefined));
+    } else {
+      obj.Cert = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageResponse.toJSON(message.pagination)
+        : undefined);
     return obj;
   },
 
   fromPartial(object: DeepPartial<QueryCertsResponse>): QueryCertsResponse {
     const message = { ...baseQueryCertsResponse } as QueryCertsResponse;
-    if (object.creator !== undefined && object.creator !== null) {
-      message.creator = object.creator;
-    } else {
-      message.creator = "";
+    message.Cert = [];
+    if (object.Cert !== undefined && object.Cert !== null) {
+      for (const e of object.Cert) {
+        message.Cert.push(Cert.fromPartial(e));
+      }
     }
-    if (object.title !== undefined && object.title !== null) {
-      message.title = object.title;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromPartial(object.pagination);
     } else {
-      message.title = "";
+      message.pagination = undefined;
     }
     return message;
   },
