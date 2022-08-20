@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package rio.rio;
+
+option go_package = "rio/x/rio/types";
+
+message Cert {
+    string creator = 1;
+    uint64 id = 2;
+    string title = 3;
+}
