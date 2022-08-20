@@ -28,6 +28,10 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgCreateCert int = 100
 
+	opWeightMsgSendCert = "op_weight_msg_send_cert"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgSendCert int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -71,6 +75,17 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgCreateCert,
 		riosimulation.SimulateMsgCreateCert(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgSendCert int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgSendCert, &weightMsgSendCert, nil,
+		func(_ *rand.Rand) {
+			weightMsgSendCert = defaultWeightMsgSendCert
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgSendCert,
+		riosimulation.SimulateMsgSendCert(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

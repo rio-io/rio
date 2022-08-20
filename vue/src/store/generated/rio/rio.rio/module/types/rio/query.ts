@@ -13,7 +13,9 @@ export interface QueryParamsResponse {
   params: Params | undefined;
 }
 
-export interface QueryCertsRequest {}
+export interface QueryCertsRequest {
+  address: string;
+}
 
 export interface QueryCertsResponse {
   creator: string;
@@ -117,10 +119,13 @@ export const QueryParamsResponse = {
   },
 };
 
-const baseQueryCertsRequest: object = {};
+const baseQueryCertsRequest: object = { address: "" };
 
 export const QueryCertsRequest = {
-  encode(_: QueryCertsRequest, writer: Writer = Writer.create()): Writer {
+  encode(message: QueryCertsRequest, writer: Writer = Writer.create()): Writer {
+    if (message.address !== "") {
+      writer.uint32(10).string(message.address);
+    }
     return writer;
   },
 
@@ -131,6 +136,9 @@ export const QueryCertsRequest = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          message.address = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -139,18 +147,29 @@ export const QueryCertsRequest = {
     return message;
   },
 
-  fromJSON(_: any): QueryCertsRequest {
+  fromJSON(object: any): QueryCertsRequest {
     const message = { ...baseQueryCertsRequest } as QueryCertsRequest;
+    if (object.address !== undefined && object.address !== null) {
+      message.address = String(object.address);
+    } else {
+      message.address = "";
+    }
     return message;
   },
 
-  toJSON(_: QueryCertsRequest): unknown {
+  toJSON(message: QueryCertsRequest): unknown {
     const obj: any = {};
+    message.address !== undefined && (obj.address = message.address);
     return obj;
   },
 
-  fromPartial(_: DeepPartial<QueryCertsRequest>): QueryCertsRequest {
+  fromPartial(object: DeepPartial<QueryCertsRequest>): QueryCertsRequest {
     const message = { ...baseQueryCertsRequest } as QueryCertsRequest;
+    if (object.address !== undefined && object.address !== null) {
+      message.address = object.address;
+    } else {
+      message.address = "";
+    }
     return message;
   },
 };

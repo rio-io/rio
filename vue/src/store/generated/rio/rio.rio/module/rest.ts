@@ -18,6 +18,8 @@ export interface RioMsgCreateCertResponse {
   id?: string;
 }
 
+export type RioMsgSendCertResponse = object;
+
 /**
  * Params defines the parameters for the module.
  */
@@ -247,10 +249,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @summary Queries a list of Certs items.
    * @request GET:/rio/rio/certs
    */
-  queryCerts = (params: RequestParams = {}) =>
+  queryCerts = (query?: { address?: string }, params: RequestParams = {}) =>
     this.request<RioQueryCertsResponse, RpcStatus>({
       path: `/rio/rio/certs`,
       method: "GET",
+      query: query,
       format: "json",
       ...params,
     });

@@ -30208,6 +30208,11 @@ paths:
                     '@type':
                       type: string
                   additionalProperties: {}
+      parameters:
+        - name: address
+          in: query
+          required: false
+          type: string
       tags:
         - Query
   /rio/rio/params:
@@ -51634,6 +51639,8 @@ definitions:
       id:
         type: string
         format: uint64
+  rio.rio.MsgSendCertResponse:
+    type: object
   rio.rio.Params:
     type: object
     description: Params defines the parameters for the module.

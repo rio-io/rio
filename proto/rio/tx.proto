@@ -9,6 +9,7 @@ option go_package = "rio/x/rio/types";
 service Msg {
   // Create new certifications in the store
   rpc CreateCert(MsgCreateCert) returns (MsgCreateCertResponse);
+  rpc SendCert(MsgSendCert) returns (MsgSendCertResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -19,6 +20,18 @@ message MsgCreateCert {
 
 message MsgCreateCertResponse {
   uint64 id = 1;
+}
+
+message MsgSendCert {
+  string creator = 1;
+  string to = 2;
+  string certType = 3;
+  string title = 4;
+  string description = 5;
+}
+
+message MsgSendCertResponse {
+    uint64 id = 1;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

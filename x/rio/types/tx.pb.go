@@ -123,28 +123,148 @@ func (m *MsgCreateCertResponse) GetId() uint64 {
 	return 0
 }
 
+type MsgSendCert struct {
+	Creator     string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	To          string `protobuf:"bytes,2,opt,name=to,proto3" json:"to,omitempty"`
+	CertType    string `protobuf:"bytes,3,opt,name=certType,proto3" json:"certType,omitempty"`
+	Title       string `protobuf:"bytes,4,opt,name=title,proto3" json:"title,omitempty"`
+	Description string `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
+}
+
+func (m *MsgSendCert) Reset()         { *m = MsgSendCert{} }
+func (m *MsgSendCert) String() string { return proto.CompactTextString(m) }
+func (*MsgSendCert) ProtoMessage()    {}
+func (*MsgSendCert) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1d0fa12e4a574dd6, []int{2}
+}
+func (m *MsgSendCert) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgSendCert) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgSendCert.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgSendCert) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgSendCert.Merge(m, src)
+}
+func (m *MsgSendCert) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgSendCert) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgSendCert.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgSendCert proto.InternalMessageInfo
+
+func (m *MsgSendCert) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgSendCert) GetTo() string {
+	if m != nil {
+		return m.To
+	}
+	return ""
+}
+
+func (m *MsgSendCert) GetCertType() string {
+	if m != nil {
+		return m.CertType
+	}
+	return ""
+}
+
+func (m *MsgSendCert) GetTitle() string {
+	if m != nil {
+		return m.Title
+	}
+	return ""
+}
+
+func (m *MsgSendCert) GetDescription() string {
+	if m != nil {
+		return m.Description
+	}
+	return ""
+}
+
+type MsgSendCertResponse struct {
+}
+
+func (m *MsgSendCertResponse) Reset()         { *m = MsgSendCertResponse{} }
+func (m *MsgSendCertResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgSendCertResponse) ProtoMessage()    {}
+func (*MsgSendCertResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1d0fa12e4a574dd6, []int{3}
+}
+func (m *MsgSendCertResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgSendCertResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgSendCertResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgSendCertResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgSendCertResponse.Merge(m, src)
+}
+func (m *MsgSendCertResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgSendCertResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgSendCertResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgSendCertResponse proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*MsgCreateCert)(nil), "rio.rio.MsgCreateCert")
 	proto.RegisterType((*MsgCreateCertResponse)(nil), "rio.rio.MsgCreateCertResponse")
+	proto.RegisterType((*MsgSendCert)(nil), "rio.rio.MsgSendCert")
+	proto.RegisterType((*MsgSendCertResponse)(nil), "rio.rio.MsgSendCertResponse")
 }
 
 func init() { proto.RegisterFile("rio/tx.proto", fileDescriptor_1d0fa12e4a574dd6) }
 
 var fileDescriptor_1d0fa12e4a574dd6 = []byte{
-	// 196 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x29, 0xca, 0xcc, 0xd7,
-	0x2f, 0xa9, 0xd0, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x2f, 0xca, 0xcc, 0xd7, 0x2b, 0xca,
-	0xcc, 0x57, 0xb2, 0xe7, 0xe2, 0xf5, 0x2d, 0x4e, 0x77, 0x2e, 0x4a, 0x4d, 0x2c, 0x49, 0x75, 0x4e,
-	0x2d, 0x2a, 0x11, 0x92, 0xe0, 0x62, 0x4f, 0x06, 0xf1, 0xf2, 0x8b, 0x24, 0x18, 0x15, 0x18, 0x35,
-	0x38, 0x83, 0x60, 0x5c, 0x21, 0x11, 0x2e, 0xd6, 0x92, 0xcc, 0x92, 0x9c, 0x54, 0x09, 0x26, 0xb0,
-	0x38, 0x84, 0xa3, 0xa4, 0xce, 0x25, 0x8a, 0x62, 0x40, 0x50, 0x6a, 0x71, 0x41, 0x7e, 0x5e, 0x71,
-	0xaa, 0x10, 0x1f, 0x17, 0x53, 0x66, 0x0a, 0xd8, 0x0c, 0x96, 0x20, 0xa6, 0xcc, 0x14, 0x23, 0x6f,
-	0x2e, 0x66, 0xdf, 0xe2, 0x74, 0x21, 0x17, 0x2e, 0x2e, 0x24, 0xdb, 0xc4, 0xf4, 0xa0, 0x0e, 0xd1,
-	0x43, 0x31, 0x44, 0x4a, 0x0e, 0xbb, 0x38, 0xcc, 0x70, 0x27, 0xcd, 0x13, 0x8f, 0xe4, 0x18, 0x2f,
-	0x3c, 0x92, 0x63, 0x7c, 0xf0, 0x48, 0x8e, 0x71, 0xc2, 0x63, 0x39, 0x86, 0x0b, 0x8f, 0xe5, 0x18,
-	0x6e, 0x3c, 0x96, 0x63, 0x88, 0xe2, 0x07, 0xf9, 0xb3, 0x42, 0x1f, 0xec, 0xdb, 0xca, 0x82, 0xd4,
-	0xe2, 0x24, 0x36, 0xb0, 0x8f, 0x8d, 0x01, 0x01, 0x00, 0x00, 0xff, 0xff, 0xc8, 0x86, 0xd2, 0xf6,
-	0x01, 0x01, 0x00, 0x00,
+	// 289 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x91, 0x41, 0x4b, 0xc3, 0x40,
+	0x10, 0x85, 0xb3, 0x69, 0x6b, 0xeb, 0x54, 0x2b, 0xac, 0xad, 0x84, 0x20, 0x4b, 0xc9, 0x45, 0xbd,
+	0xa4, 0xa0, 0x77, 0x05, 0xeb, 0x35, 0x97, 0xe8, 0xc9, 0x9b, 0x26, 0x43, 0x58, 0x90, 0x6c, 0xd8,
+	0x9d, 0x43, 0xfb, 0x1b, 0x7a, 0xf1, 0x67, 0x79, 0xec, 0xd1, 0xa3, 0x24, 0x7f, 0x44, 0xba, 0x36,
+	0x31, 0x85, 0x42, 0x8f, 0xef, 0x4b, 0x76, 0xe6, 0xcd, 0x7b, 0x70, 0xa2, 0xa5, 0x9a, 0xd1, 0x22,
+	0x2c, 0xb4, 0x22, 0xc5, 0xfb, 0x5a, 0xaa, 0x50, 0x4b, 0x15, 0x3c, 0xc0, 0x69, 0x64, 0xb2, 0xb9,
+	0xc6, 0x37, 0xc2, 0x39, 0x6a, 0xe2, 0x1e, 0xf4, 0x93, 0x8d, 0x52, 0xda, 0x63, 0x53, 0x76, 0x7d,
+	0x1c, 0xd7, 0x92, 0x8f, 0xa1, 0x47, 0x92, 0x3e, 0xd0, 0x73, 0x2d, 0xff, 0x13, 0xc1, 0x15, 0x4c,
+	0x76, 0x06, 0xc4, 0x68, 0x0a, 0x95, 0x1b, 0xe4, 0x23, 0x70, 0x65, 0x6a, 0x67, 0x74, 0x63, 0x57,
+	0xa6, 0xc1, 0x8a, 0xc1, 0x30, 0x32, 0xd9, 0x33, 0xe6, 0xe9, 0x81, 0x45, 0x23, 0x70, 0x49, 0x6d,
+	0xb7, 0xb8, 0xa4, 0xb8, 0x0f, 0x83, 0x04, 0x35, 0xbd, 0x2c, 0x0b, 0xf4, 0x3a, 0x96, 0x36, 0xfa,
+	0xdf, 0x54, 0xb7, 0x65, 0x8a, 0x4f, 0x61, 0x98, 0xa2, 0x49, 0xb4, 0x2c, 0x48, 0xaa, 0xdc, 0xeb,
+	0xd9, 0x6f, 0x6d, 0x14, 0x4c, 0xe0, 0xbc, 0x65, 0xa6, 0x36, 0x7d, 0xbb, 0x62, 0xd0, 0x89, 0x4c,
+	0xc6, 0x9f, 0x00, 0x5a, 0x99, 0x5c, 0x84, 0xdb, 0xb8, 0xc2, 0x9d, 0x53, 0x7d, 0xb1, 0x9f, 0x37,
+	0x11, 0xdc, 0xc3, 0xa0, 0x39, 0x77, 0xdc, 0xfe, 0xb7, 0xa6, 0xfe, 0xe5, 0x3e, 0x5a, 0xbf, 0x7f,
+	0xbc, 0xf9, 0x2a, 0x05, 0x5b, 0x97, 0x82, 0xfd, 0x94, 0x82, 0x7d, 0x56, 0xc2, 0x59, 0x57, 0xc2,
+	0xf9, 0xae, 0x84, 0xf3, 0x7a, 0xb6, 0x69, 0x73, 0x31, 0xb3, 0x9d, 0x2e, 0x0b, 0x34, 0xef, 0x47,
+	0xb6, 0xd7, 0xbb, 0xdf, 0x00, 0x00, 0x00, 0xff, 0xff, 0x42, 0x4c, 0x30, 0xcf, 0xe7, 0x01, 0x00,
+	0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -161,6 +281,7 @@ const _ = grpc.SupportPackageIsVersion4
 type MsgClient interface {
 	// Create new certifications in the store
 	CreateCert(ctx context.Context, in *MsgCreateCert, opts ...grpc.CallOption) (*MsgCreateCertResponse, error)
+	SendCert(ctx context.Context, in *MsgSendCert, opts ...grpc.CallOption) (*MsgSendCertResponse, error)
 }
 
 type msgClient struct {
@@ -180,10 +301,20 @@ func (c *msgClient) CreateCert(ctx context.Context, in *MsgCreateCert, opts ...g
 	return out, nil
 }
 
+func (c *msgClient) SendCert(ctx context.Context, in *MsgSendCert, opts ...grpc.CallOption) (*MsgSendCertResponse, error) {
+	out := new(MsgSendCertResponse)
+	err := c.cc.Invoke(ctx, "/rio.rio.Msg/SendCert", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
 	// Create new certifications in the store
 	CreateCert(context.Context, *MsgCreateCert) (*MsgCreateCertResponse, error)
+	SendCert(context.Context, *MsgSendCert) (*MsgSendCertResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -192,6 +323,9 @@ type UnimplementedMsgServer struct {
 
 func (*UnimplementedMsgServer) CreateCert(ctx context.Context, req *MsgCreateCert) (*MsgCreateCertResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateCert not implemented")
+}
+func (*UnimplementedMsgServer) SendCert(ctx context.Context, req *MsgSendCert) (*MsgSendCertResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendCert not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -216,6 +350,24 @@ func _Msg_CreateCert_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_SendCert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgSendCert)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).SendCert(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/rio.rio.Msg/SendCert",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).SendCert(ctx, req.(*MsgSendCert))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "rio.rio.Msg",
 	HandlerType: (*MsgServer)(nil),
@@ -223,6 +375,10 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateCert",
 			Handler:    _Msg_CreateCert_Handler,
+		},
+		{
+			MethodName: "SendCert",
+			Handler:    _Msg_SendCert_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -294,6 +450,87 @@ func (m *MsgCreateCertResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgSendCert) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgSendCert) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgSendCert) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Description) > 0 {
+		i -= len(m.Description)
+		copy(dAtA[i:], m.Description)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Description)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.Title) > 0 {
+		i -= len(m.Title)
+		copy(dAtA[i:], m.Title)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Title)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.CertType) > 0 {
+		i -= len(m.CertType)
+		copy(dAtA[i:], m.CertType)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.CertType)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.To) > 0 {
+		i -= len(m.To)
+		copy(dAtA[i:], m.To)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.To)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgSendCertResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgSendCertResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgSendCertResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	offset -= sovTx(v)
 	base := offset
@@ -331,6 +568,44 @@ func (m *MsgCreateCertResponse) Size() (n int) {
 	if m.Id != 0 {
 		n += 1 + sovTx(uint64(m.Id))
 	}
+	return n
+}
+
+func (m *MsgSendCert) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.To)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.CertType)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Title)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Description)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgSendCertResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
 	return n
 }
 
@@ -502,6 +777,266 @@ func (m *MsgCreateCertResponse) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgSendCert) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgSendCert: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgSendCert: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field To", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.To = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CertType", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.CertType = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Title", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Title = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Description", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Description = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgSendCertResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgSendCertResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgSendCertResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
 		default:
 			iNdEx = preIndex
 			skippy, err := skipTx(dAtA[iNdEx:])
