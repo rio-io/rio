@@ -1,0 +1,14 @@
+syntax = "proto3";
+package rio.rio;
+
+import "gogoproto/gogo.proto";
+import "rio/params.proto";
+// this line is used by starport scaffolding # genesis/proto/import
+
+option go_package = "rio/x/rio/types";
+
+// GenesisState defines the rio module's genesis state.
+message GenesisState {
+  Params params = 1 [(gogoproto.nullable) = false];
+  // this line is used by starport scaffolding # genesis/proto/state
+}
