@@ -1,9 +1,10 @@
 import { txClient, queryClient, MissingWalletError , registry} from './module'
 
+import { Cert } from "./module/types/rio/cert"
 import { Params } from "./module/types/rio/params"
 
 
-export { Params };
+export { Cert, Params };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -44,6 +45,7 @@ const getDefaultState = () => {
 				Params: {},
 				
 				_Structure: {
+						Cert: getStructure(Cert.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
 						
 		},

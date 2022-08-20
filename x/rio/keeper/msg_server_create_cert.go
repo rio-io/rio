@@ -10,8 +10,15 @@ import (
 func (k msgServer) CreateCert(goCtx context.Context, msg *types.MsgCreateCert) (*types.MsgCreateCertResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// TODO: Handling the message
-	_ = ctx
+	// Create variable of type Cert
+	var cert = types.Cert {
+		Creator: msg.Creator,
+		Title: msg.Title,
+	}
 
-	return &types.MsgCreateCertResponse{}, nil
+	// Add a certification to the store and get back the ID
+	id := k.AppendCert(ctx, cert)
+
+	// Return the ID of the certrification
+	return &types.MsgCreateCertResponse{Id: id}, nil
 }

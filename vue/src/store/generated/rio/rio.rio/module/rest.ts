@@ -13,7 +13,10 @@ export interface ProtobufAny {
   "@type"?: string;
 }
 
-export type RioMsgCreateCertResponse = object;
+export interface RioMsgCreateCertResponse {
+  /** @format uint64 */
+  id?: string;
+}
 
 /**
  * Params defines the parameters for the module.
@@ -227,7 +230,7 @@ export class HttpClient<SecurityDataType = unknown> {
 }
 
 /**
- * @title rio/genesis.proto
+ * @title rio/cert.proto
  * @version version not set
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {

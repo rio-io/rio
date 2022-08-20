@@ -51596,6 +51596,10 @@ definitions:
       the connection handshake.
   rio.rio.MsgCreateCertResponse:
     type: object
+    properties:
+      id:
+        type: string
+        format: uint64
   rio.rio.Params:
     type: object
     description: Params defines the parameters for the module.
