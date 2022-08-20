@@ -30176,6 +30176,40 @@ paths:
           format: uint64
       tags:
         - Query
+  /rio/rio/certs:
+    get:
+      summary: Queries a list of Certs items.
+      operationId: RioRioCerts
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              creator:
+                type: string
+              title:
+                type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
   /rio/rio/params:
     get:
       summary: Parameters queries the parameters of the module.
@@ -51603,6 +51637,13 @@ definitions:
   rio.rio.Params:
     type: object
     description: Params defines the parameters for the module.
+  rio.rio.QueryCertsResponse:
+    type: object
+    properties:
+      creator:
+        type: string
+      title:
+        type: string
   rio.rio.QueryParamsResponse:
     type: object
     properties:

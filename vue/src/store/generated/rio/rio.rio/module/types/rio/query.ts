@@ -13,6 +13,13 @@ export interface QueryParamsResponse {
   params: Params | undefined;
 }
 
+export interface QueryCertsRequest {}
+
+export interface QueryCertsResponse {
+  creator: string;
+  title: string;
+}
+
 const baseQueryParamsRequest: object = {};
 
 export const QueryParamsRequest = {
@@ -110,10 +117,125 @@ export const QueryParamsResponse = {
   },
 };
 
+const baseQueryCertsRequest: object = {};
+
+export const QueryCertsRequest = {
+  encode(_: QueryCertsRequest, writer: Writer = Writer.create()): Writer {
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryCertsRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryCertsRequest } as QueryCertsRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): QueryCertsRequest {
+    const message = { ...baseQueryCertsRequest } as QueryCertsRequest;
+    return message;
+  },
+
+  toJSON(_: QueryCertsRequest): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(_: DeepPartial<QueryCertsRequest>): QueryCertsRequest {
+    const message = { ...baseQueryCertsRequest } as QueryCertsRequest;
+    return message;
+  },
+};
+
+const baseQueryCertsResponse: object = { creator: "", title: "" };
+
+export const QueryCertsResponse = {
+  encode(
+    message: QueryCertsResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.title !== "") {
+      writer.uint32(18).string(message.title);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryCertsResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryCertsResponse } as QueryCertsResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.title = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryCertsResponse {
+    const message = { ...baseQueryCertsResponse } as QueryCertsResponse;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.title !== undefined && object.title !== null) {
+      message.title = String(object.title);
+    } else {
+      message.title = "";
+    }
+    return message;
+  },
+
+  toJSON(message: QueryCertsResponse): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.title !== undefined && (obj.title = message.title);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<QueryCertsResponse>): QueryCertsResponse {
+    const message = { ...baseQueryCertsResponse } as QueryCertsResponse;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.title !== undefined && object.title !== null) {
+      message.title = object.title;
+    } else {
+      message.title = "";
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse>;
+  /** Queries a list of Certs items. */
+  Certs(request: QueryCertsRequest): Promise<QueryCertsResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -125,6 +247,12 @@ export class QueryClientImpl implements Query {
     const data = QueryParamsRequest.encode(request).finish();
     const promise = this.rpc.request("rio.rio.Query", "Params", data);
     return promise.then((data) => QueryParamsResponse.decode(new Reader(data)));
+  }
+
+  Certs(request: QueryCertsRequest): Promise<QueryCertsResponse> {
+    const data = QueryCertsRequest.encode(request).finish();
+    const promise = this.rpc.request("rio.rio.Query", "Certs", data);
+    return promise.then((data) => QueryCertsResponse.decode(new Reader(data)));
   }
 }
 

@@ -11,9 +11,9 @@ func (k msgServer) CreateCert(goCtx context.Context, msg *types.MsgCreateCert) (
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	// Create variable of type Cert
-	var cert = types.Cert {
+	var cert = types.Cert{
 		Creator: msg.Creator,
-		Title: msg.Title,
+		Title:   msg.Title,
 	}
 
 	// Add a certification to the store and get back the ID

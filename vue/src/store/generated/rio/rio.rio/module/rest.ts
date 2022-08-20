@@ -23,6 +23,11 @@ export interface RioMsgCreateCertResponse {
  */
 export type RioParams = object;
 
+export interface RioQueryCertsResponse {
+  creator?: string;
+  title?: string;
+}
+
 /**
  * QueryParamsResponse is response type for the Query/Params RPC method.
  */
@@ -234,6 +239,22 @@ export class HttpClient<SecurityDataType = unknown> {
  * @version version not set
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryCerts
+   * @summary Queries a list of Certs items.
+   * @request GET:/rio/rio/certs
+   */
+  queryCerts = (params: RequestParams = {}) =>
+    this.request<RioQueryCertsResponse, RpcStatus>({
+      path: `/rio/rio/certs`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
   /**
    * No description
    *
