@@ -45,6 +45,24 @@ func (k Keeper) SetResumeCount(ctx sdk.Context, count uint64) {
 	store.Set(byteKey, bz)
 }
 
+func (k Keeper) GetResume(ctx sdk.Context, id uint64) (val types.Resume) {
+		// Get the store
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), []byte(types.ResumeKey))
+
+	// Convert the post ID into bytes
+	byteKey := make([]byte, 8)
+	binary.BigEndian.PutUint64(byteKey, id)
+
+	r := store.Get(byteKey)
+
+    if r == nil {
+        return val
+    }
+
+    k.cdc.MustUnmarshal(r, &val)
+    return val
+}
+
 // Add a resum to the store and get back the ID
 func (k Keeper) AppendResume(ctx sdk.Context, resume types.Resume) uint64 {
 	// Get the current number of posts in the store (count)
