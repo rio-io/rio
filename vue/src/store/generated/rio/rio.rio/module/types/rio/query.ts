@@ -7,6 +7,7 @@ import {
   PageResponse,
 } from "../cosmos/base/query/v1beta1/pagination";
 import { Cert } from "../rio/cert";
+import { Resume } from "../rio/resume";
 
 export const protobufPackage = "rio.rio";
 
@@ -33,7 +34,9 @@ export interface QueryResumesRequest {
   id: number;
 }
 
-export interface QueryResumesResponse {}
+export interface QueryResumesResponse {
+  Resume: Resume | undefined;
+}
 
 const baseQueryParamsRequest: object = {};
 
@@ -356,7 +359,13 @@ export const QueryResumesRequest = {
 const baseQueryResumesResponse: object = {};
 
 export const QueryResumesResponse = {
-  encode(_: QueryResumesResponse, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: QueryResumesResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.Resume !== undefined) {
+      Resume.encode(message.Resume, writer.uint32(10).fork()).ldelim();
+    }
     return writer;
   },
 
@@ -367,6 +376,9 @@ export const QueryResumesResponse = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          message.Resume = Resume.decode(reader, reader.uint32());
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -375,18 +387,30 @@ export const QueryResumesResponse = {
     return message;
   },
 
-  fromJSON(_: any): QueryResumesResponse {
+  fromJSON(object: any): QueryResumesResponse {
     const message = { ...baseQueryResumesResponse } as QueryResumesResponse;
+    if (object.Resume !== undefined && object.Resume !== null) {
+      message.Resume = Resume.fromJSON(object.Resume);
+    } else {
+      message.Resume = undefined;
+    }
     return message;
   },
 
-  toJSON(_: QueryResumesResponse): unknown {
+  toJSON(message: QueryResumesResponse): unknown {
     const obj: any = {};
+    message.Resume !== undefined &&
+      (obj.Resume = message.Resume ? Resume.toJSON(message.Resume) : undefined);
     return obj;
   },
 
-  fromPartial(_: DeepPartial<QueryResumesResponse>): QueryResumesResponse {
+  fromPartial(object: DeepPartial<QueryResumesResponse>): QueryResumesResponse {
     const message = { ...baseQueryResumesResponse } as QueryResumesResponse;
+    if (object.Resume !== undefined && object.Resume !== null) {
+      message.Resume = Resume.fromPartial(object.Resume);
+    } else {
+      message.Resume = undefined;
+    }
     return message;
   },
 };

@@ -6,6 +6,7 @@ import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "rio/params.proto";
 import "rio/cert.proto";
+import "rio/resume.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "rio/x/rio/types";

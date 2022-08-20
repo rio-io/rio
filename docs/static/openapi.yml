@@ -30303,6 +30303,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   /rio/rio/params:
@@ -30350,6 +30360,45 @@ paths:
           description: A successful response.
           schema:
             type: object
+            properties:
+              Resume:
+                type: object
+                properties:
+                  creator:
+                    type: string
+                  id:
+                    type: string
+                    format: uint64
+                  certs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        creator:
+                          type: string
+                        id:
+                          type: string
+                          format: uint64
+                        certType:
+                          type: string
+                        title:
+                          type: string
+                        description:
+                          type: string
+                        owner:
+                          type: string
+                        createdAt:
+                          type: string
+                          format: int64
+                  avatarUrl:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: int64
         default:
           description: An unexpected error response.
           schema:
@@ -51856,6 +51905,83 @@ definitions:
     description: QueryParamsResponse is response type for the Query/Params RPC method.
   rio.rio.QueryResumesResponse:
     type: object
+    properties:
+      Resume:
+        type: object
+        properties:
+          creator:
+            type: string
+          id:
+            type: string
+            format: uint64
+          certs:
+            type: array
+            items:
+              type: object
+              properties:
+                creator:
+                  type: string
+                id:
+                  type: string
+                  format: uint64
+                certType:
+                  type: string
+                title:
+                  type: string
+                description:
+                  type: string
+                owner:
+                  type: string
+                createdAt:
+                  type: string
+                  format: int64
+          avatarUrl:
+            type: string
+          name:
+            type: string
+          description:
+            type: string
+          createdAt:
+            type: string
+            format: int64
+  rio.rio.Resume:
+    type: object
+    properties:
+      creator:
+        type: string
+      id:
+        type: string
+        format: uint64
+      certs:
+        type: array
+        items:
+          type: object
+          properties:
+            creator:
+              type: string
+            id:
+              type: string
+              format: uint64
+            certType:
+              type: string
+            title:
+              type: string
+            description:
+              type: string
+            owner:
+              type: string
+            createdAt:
+              type: string
+              format: int64
+      avatarUrl:
+        type: string
+      name:
+        type: string
+      description:
+        type: string
+      createdAt:
+        type: string
+        format: int64
   tendermint.spn.monitoringp.ConnectionChannelID:
     type: object
     properties:

@@ -70,7 +70,23 @@ export interface RioQueryParamsResponse {
   params?: RioParams;
 }
 
-export type RioQueryResumesResponse = object;
+export interface RioQueryResumesResponse {
+  Resume?: RioResume;
+}
+
+export interface RioResume {
+  creator?: string;
+
+  /** @format uint64 */
+  id?: string;
+  certs?: RioCert[];
+  avatarUrl?: string;
+  name?: string;
+  description?: string;
+
+  /** @format int64 */
+  createdAt?: string;
+}
 
 export interface RpcStatus {
   /** @format int32 */
