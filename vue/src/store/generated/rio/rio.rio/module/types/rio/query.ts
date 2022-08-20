@@ -1,5 +1,6 @@
 /* eslint-disable */
-import { Reader, Writer } from "protobufjs/minimal";
+import { Reader, util, configure, Writer } from "protobufjs/minimal";
+import * as Long from "long";
 import { Params } from "../rio/params";
 import {
   PageRequest,
@@ -27,6 +28,12 @@ export interface QueryCertsResponse {
   Cert: Cert[];
   pagination: PageResponse | undefined;
 }
+
+export interface QueryResumesRequest {
+  id: number;
+}
+
+export interface QueryResumesResponse {}
 
 const baseQueryParamsRequest: object = {};
 
@@ -288,12 +295,110 @@ export const QueryCertsResponse = {
   },
 };
 
+const baseQueryResumesRequest: object = { id: 0 };
+
+export const QueryResumesRequest = {
+  encode(
+    message: QueryResumesRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryResumesRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryResumesRequest } as QueryResumesRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryResumesRequest {
+    const message = { ...baseQueryResumesRequest } as QueryResumesRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryResumesRequest): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<QueryResumesRequest>): QueryResumesRequest {
+    const message = { ...baseQueryResumesRequest } as QueryResumesRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseQueryResumesResponse: object = {};
+
+export const QueryResumesResponse = {
+  encode(_: QueryResumesResponse, writer: Writer = Writer.create()): Writer {
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryResumesResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryResumesResponse } as QueryResumesResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): QueryResumesResponse {
+    const message = { ...baseQueryResumesResponse } as QueryResumesResponse;
+    return message;
+  },
+
+  toJSON(_: QueryResumesResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(_: DeepPartial<QueryResumesResponse>): QueryResumesResponse {
+    const message = { ...baseQueryResumesResponse } as QueryResumesResponse;
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse>;
   /** Queries a list of Certs items. */
   Certs(request: QueryCertsRequest): Promise<QueryCertsResponse>;
+  /** Queries a list of Resumes items. */
+  Resumes(request: QueryResumesRequest): Promise<QueryResumesResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -312,6 +417,14 @@ export class QueryClientImpl implements Query {
     const promise = this.rpc.request("rio.rio.Query", "Certs", data);
     return promise.then((data) => QueryCertsResponse.decode(new Reader(data)));
   }
+
+  Resumes(request: QueryResumesRequest): Promise<QueryResumesResponse> {
+    const data = QueryResumesRequest.encode(request).finish();
+    const promise = this.rpc.request("rio.rio.Query", "Resumes", data);
+    return promise.then((data) =>
+      QueryResumesResponse.decode(new Reader(data))
+    );
+  }
 }
 
 interface Rpc {
@@ -321,6 +434,16 @@ interface Rpc {
     data: Uint8Array
   ): Promise<Uint8Array>;
 }
+
+declare var self: any | undefined;
+declare var window: any | undefined;
+var globalThis: any = (() => {
+  if (typeof globalThis !== "undefined") return globalThis;
+  if (typeof self !== "undefined") return self;
+  if (typeof window !== "undefined") return window;
+  if (typeof global !== "undefined") return global;
+  throw "Unable to locate global object";
+})();
 
 type Builtin = Date | Function | Uint8Array | string | number | undefined;
 export type DeepPartial<T> = T extends Builtin
@@ -332,3 +455,15 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+function longToNumber(long: Long): number {
+  if (long.gt(Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  }
+  return long.toNumber();
+}
+
+if (util.Long !== Long) {
+  util.Long = Long as any;
+  configure();
+}

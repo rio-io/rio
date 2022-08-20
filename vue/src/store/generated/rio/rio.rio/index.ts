@@ -45,6 +45,7 @@ const getDefaultState = () => {
 	return {
 				Params: {},
 				Certs: {},
+				Resumes: {},
 				
 				_Structure: {
 						Cert: getStructure(Cert.fromPartial({})),
@@ -89,6 +90,12 @@ export default {
 						(<any> params).query=null
 					}
 			return state.Certs[JSON.stringify(params)] ?? {}
+		},
+				getResumes: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.Resumes[JSON.stringify(params)] ?? {}
 		},
 				
 		getTypeStructure: (state) => (type) => {
@@ -172,6 +179,43 @@ export default {
 		},
 		
 		
+		
+		
+		 		
+		
+		
+		async QueryResumes({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryResumes( key.id)).data
+				
+					
+				commit('QUERY', { query: 'Resumes', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryResumes', payload: { options: { all }, params: {...key},query }})
+				return getters['getResumes']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryResumes API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
+		async sendMsgSendCert({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgSendCert(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgSendCert:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgSendCert:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
 		async sendMsgCreateResume({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -202,22 +246,20 @@ export default {
 				}
 			}
 		},
-		async sendMsgSendCert({ rootGetters }, { value, fee = [], memo = '' }) {
+		
+		async MsgSendCert({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
 				const msg = await txClient.msgSendCert(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
+				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
 					throw new Error('TxClient:MsgSendCert:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgSendCert:Send Could not broadcast Tx: '+ e.message)
+				} else{
+					throw new Error('TxClient:MsgSendCert:Create Could not create message: ' + e.message)
 				}
 			}
 		},
-		
 		async MsgCreateResume({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -241,19 +283,6 @@ export default {
 					throw new Error('TxClient:MsgCreateCert:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgCreateCert:Create Could not create message: ' + e.message)
-				}
-			}
-		},
-		async MsgSendCert({ rootGetters }, { value }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgSendCert(value)
-				return msg
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgSendCert:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgSendCert:Create Could not create message: ' + e.message)
 				}
 			}
 		},

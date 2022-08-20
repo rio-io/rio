@@ -70,6 +70,8 @@ export interface RioQueryParamsResponse {
   params?: RioParams;
 }
 
+export type RioQueryResumesResponse = object;
+
 export interface RpcStatus {
   /** @format int32 */
   code?: number;
@@ -366,6 +368,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryParams = (params: RequestParams = {}) =>
     this.request<RioQueryParamsResponse, RpcStatus>({
       path: `/rio/rio/params`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryResumes
+   * @summary Queries a list of Resumes items.
+   * @request GET:/rio/rio/resumes/{id}
+   */
+  queryResumes = (id: string, params: RequestParams = {}) =>
+    this.request<RioQueryResumesResponse, RpcStatus>({
+      path: `/rio/rio/resumes/${id}`,
       method: "GET",
       format: "json",
       ...params,

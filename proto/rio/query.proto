@@ -21,6 +21,11 @@ service Query {
 		option (google.api.http).get = "/rio/rio/certs";
 	}
 
+// Queries a list of Resumes items.
+	rpc Resumes(QueryResumesRequest) returns (QueryResumesResponse) {
+		option (google.api.http).get = "/rio/rio/resumes/{id}";
+	}
+
 // this line is used by starport scaffolding # 2
 }
 
@@ -41,6 +46,14 @@ message QueryCertsRequest {
 message QueryCertsResponse {
   repeated Cert Cert = 1;
   cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryResumesRequest {
+  uint64 id = 1;
+}
+
+message QueryResumesResponse {
+  Resume Resume = 1;
 }
 
 // this line is used by starport scaffolding # 3
