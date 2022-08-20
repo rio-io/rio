@@ -7,5 +7,9 @@ option go_package = "rio/x/rio/types";
 message Cert {
     string creator = 1;
     uint64 id = 2;
-    string title = 3;
+    string certType = 3;
+    string title = 4;
+    string description = 5;
+    string owner = 6;
+    int64 createdAt = 7;
 }

@@ -21,7 +21,9 @@ export interface MsgSendCert {
   description: string;
 }
 
-export interface MsgSendCertResponse {}
+export interface MsgSendCertResponse {
+  id: number;
+}
 
 const baseMsgCreateCert: object = { creator: "", title: "" };
 
@@ -285,10 +287,16 @@ export const MsgSendCert = {
   },
 };
 
-const baseMsgSendCertResponse: object = {};
+const baseMsgSendCertResponse: object = { id: 0 };
 
 export const MsgSendCertResponse = {
-  encode(_: MsgSendCertResponse, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: MsgSendCertResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
     return writer;
   },
 
@@ -299,6 +307,9 @@ export const MsgSendCertResponse = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -307,18 +318,29 @@ export const MsgSendCertResponse = {
     return message;
   },
 
-  fromJSON(_: any): MsgSendCertResponse {
+  fromJSON(object: any): MsgSendCertResponse {
     const message = { ...baseMsgSendCertResponse } as MsgSendCertResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
     return message;
   },
 
-  toJSON(_: MsgSendCertResponse): unknown {
+  toJSON(message: MsgSendCertResponse): unknown {
     const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
     return obj;
   },
 
-  fromPartial(_: DeepPartial<MsgSendCertResponse>): MsgSendCertResponse {
+  fromPartial(object: DeepPartial<MsgSendCertResponse>): MsgSendCertResponse {
     const message = { ...baseMsgSendCertResponse } as MsgSendCertResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
     return message;
   },
 };

@@ -18,7 +18,10 @@ export interface RioMsgCreateCertResponse {
   id?: string;
 }
 
-export type RioMsgSendCertResponse = object;
+export interface RioMsgSendCertResponse {
+  /** @format uint64 */
+  id?: string;
+}
 
 /**
  * Params defines the parameters for the module.
