@@ -5,6 +5,8 @@ import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "rio/params.proto";
+import "rio/cert.proto";
+import "rio/resume.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "rio/x/rio/types";
@@ -15,7 +17,17 @@ service Query {
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/rio/rio/params";
   }
-  // this line is used by starport scaffolding # 2
+  // Queries a list of Certs items.
+	rpc Certs(QueryCertsRequest) returns (QueryCertsResponse) {
+		option (google.api.http).get = "/rio/rio/certs";
+	}
+
+// Queries a list of Resumes items.
+	rpc Resumes(QueryResumesRequest) returns (QueryResumesResponse) {
+		option (google.api.http).get = "/rio/rio/resumes/{id}";
+	}
+
+// this line is used by starport scaffolding # 2
 }
 
 // QueryParamsRequest is request type for the Query/Params RPC method.
@@ -25,6 +37,24 @@ message QueryParamsRequest {}
 message QueryParamsResponse {
   // params holds all the parameters of this module.
   Params params = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryCertsRequest {
+  string address = 1;
+  cosmos.base.query.v1beta1.PageRequest pagination = 2;
+}
+
+message QueryCertsResponse {
+  repeated Cert Cert = 1;
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryResumesRequest {
+  uint64 id = 1;
+}
+
+message QueryResumesResponse {
+  Resume Resume = 1;
 }
 
 // this line is used by starport scaffolding # 3

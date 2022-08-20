@@ -21,6 +21,9 @@ const (
 
 	// TODO: It really need it? not unique key combined with creator and sequential id
 	CertCountKey = "Cert-count-"
+
+	ResumeKey      = "Resume-value-"
+	ResumeCountKey = "Resume-count-"
 )
 
 func KeyPrefix(p string) []byte {

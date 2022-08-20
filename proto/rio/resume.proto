@@ -2,14 +2,16 @@ syntax = "proto3";
 
 package rio.rio;
 
+import "rio/cert.proto";
+
 option go_package = "rio/x/rio/types";
 
-message Cert {
+message Resume {
     string creator = 1;
     uint64 id = 2;
-    string certType = 3;
-    string title = 4;
-    string description = 5;
-    string owner = 6;
+    repeated Cert certs = 3;
+    string avatarUrl = 4;
+    string name = 5;
+    string description = 6;
     int64 createdAt = 7;
 }
